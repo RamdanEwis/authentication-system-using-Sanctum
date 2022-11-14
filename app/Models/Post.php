@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tag;
 
 class Post extends Model
 {
@@ -12,6 +13,6 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class)->as('tags');
+        return $this->belongsToMany(Tag::class);
     }
 }

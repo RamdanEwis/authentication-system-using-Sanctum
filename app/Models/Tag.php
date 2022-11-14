@@ -9,7 +9,9 @@ class Tag extends Model
 {
     use HasFactory;
     public $guarded = [];
-
+    protected $hidden = [
+        'pivot',
+    ];
     public function posts()
     {
         return $this->belongsToMany(Post::class);

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('body');
             $table->string('cover_image');
-            $table->string('pinned');
+            $table->boolean('pinned')->default(false)->nullable();
             $table->timestamps();
         });
     }

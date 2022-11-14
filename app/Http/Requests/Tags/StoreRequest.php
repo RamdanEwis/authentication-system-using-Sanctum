@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Tags;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class store extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class store extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required'],
-            'body' => ['required'],
-            'cover_image' => ['required'],
-            'pinned' => ['required'],
+            'title' => ['required','min:3','max:255']
         ];
     }
 }

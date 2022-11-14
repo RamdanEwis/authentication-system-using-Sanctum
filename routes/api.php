@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\PhoneNumberVerifyController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,15 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+/*Authentication User */
+Route::post('/register', [AuthController::class, 'createUser']);
+Route::post('/login', [AuthController::class, 'loginUser']);
+
+/*phone verification With twilio auth_token */
+Route::get('phone/verify', [PhoneNumberVerifyController::class,'show'])->name('phone_verification.show');
+Route::post('phone/verify', [PhoneNumberVerifyController::class,'verify'])->name('phone_verification.verify');
+
+/*group apiResource Posts And Tags */
+Route::middleware('auth:sanctum')->group( function () {
+    Route::apiResource('posts', PostController::class);
+    Route::apiResource('tags', TagController::class);
 });
-
-Route::post('/auth/register', [AuthController::class, 'createUser']);
-Route::post('/auth/login', [AuthController::class, 'loginUser'])->middleware('verifiedphone');
-
-Route::get('phone/verify', 'PhoneNumberVerifyController@show')->name('phoneverification.show');
-Route::post('phone/verify', 'PhoneNumberVerifyController@verify')->name('phoneverification.verify');
-
-Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
 
