@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser'])->middleware('verifiedphone');
+
+Route::get('phone/verify', 'PhoneNumberVerifyController@show')->name('phoneverification.show');
+Route::post('phone/verify', 'PhoneNumberVerifyController@verify')->name('phoneverification.verify');
+
+Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
+

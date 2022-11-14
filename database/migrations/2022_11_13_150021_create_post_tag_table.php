@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('post_tag', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone_number')->unique();
-            $table->string('verification_code')->unique()->nullable();
-            $table->timestamp('phone_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('post_id')->references('id')->on('posts');
+            $table->foreignId('tag_id')->references('id')->on('tags');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('post_tag');
     }
 };
